@@ -1,55 +1,20 @@
-// Manual code for validation tests.
-
 package testpb
 
 import (
-	"errors"
 	"math"
 )
 
-func (x *PingRequest) Validate(bool) error {
-	if x.SleepTimeMs > 10000 {
-		return errors.New("cannot sleep for more than 10s")
-	}
-	return nil
-}
+func (x *PingRequest) Validate(bool) error { _ = "STUB: not implemented"; return nil }
 
-func (x *PingErrorRequest) Validate() error {
-	if x.SleepTimeMs > 10000 {
-		return errors.New("cannot sleep for more than 10s")
-	}
-	return nil
-}
+func (x *PingErrorRequest) Validate() error { _ = "STUB: not implemented"; return nil }
 
-func (x *PingListRequest) Validate(bool) error {
-	if x.SleepTimeMs > 10000 {
-		return errors.New("cannot sleep for more than 10s")
-	}
-	return nil
-}
+func (x *PingListRequest) Validate(bool) error { _ = "STUB: not implemented"; return nil }
 
-func (x *PingStreamRequest) Validate(bool) error {
-	if x.SleepTimeMs > 10000 {
-		return errors.New("cannot sleep for more than 10s")
-	}
-	return nil
-}
+func (x *PingStreamRequest) Validate(bool) error { _ = "STUB: not implemented"; return nil }
 
-// Validate implements the legacy validation interface from protoc-gen-validate.
-func (x *PingResponse) Validate() error {
-	if x.Counter > math.MaxInt16 {
-		return errors.New("ping allocation exceeded")
-	}
-	return nil
-}
+func (x *PingResponse) Validate() error { _ = "STUB: not implemented"; return nil }
 
-// ValidateAll implements the new ValidateAll interface from protoc-gen-validate.
-func (x *PingResponse) ValidateAll() error {
-	if x.Counter > math.MaxInt16 {
-		return errors.New("ping allocation exceeded")
-	}
-	return nil
-}
+func (x *PingResponse) ValidateAll() error { _ = "STUB: not implemented"; return nil }
 
 var (
 	GoodPing       = &PingRequest{Value: "something", SleepTimeMs: 9999}

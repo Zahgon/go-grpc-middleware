@@ -1,6 +1,3 @@
-// Copyright (c) The go-grpc-middleware Authors.
-// Licensed under the Apache License 2.0.
-
 package testvalidate
 
 import (
@@ -17,23 +14,18 @@ func (v *TestValidateService) Send(
 	_ context.Context,
 	_ *testvalidatev1.SendRequest,
 ) (*testvalidatev1.SendResponse, error) {
-	return &testvalidatev1.SendResponse{}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (v *TestValidateService) SendStream(
 	_ *testvalidatev1.SendStreamRequest,
 	stream testvalidatev1.TestValidateService_SendStreamServer,
 ) error {
-	for i := 0; i < 10; i++ {
-		if err := stream.Send(&testvalidatev1.SendStreamResponse{}); err != nil {
-			return err
-		}
-	}
-
+	_ = "STUB: not implemented"
 	return nil
 }
 
-// Unary requests for unit testing
 var (
 	BadUnaryRequest = &testvalidatev1.SendRequest{
 		Message: "%any",
@@ -44,7 +36,6 @@ var (
 	}
 )
 
-// Stream requests for unit testing
 var (
 	BadStreamRequest = &testvalidatev1.SendStreamRequest{
 		Message: "%any",

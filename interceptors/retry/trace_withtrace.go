@@ -1,6 +1,3 @@
-// Copyright (c) The go-grpc-middleware Authors.
-// Licensed under the Apache License 2.0.
-
 //go:build !retrynotrace
 
 package retry
@@ -12,5 +9,6 @@ import (
 )
 
 func traceFromCtx(ctx context.Context) (t.Trace, bool) {
-	return t.FromContext(ctx)
+	_ = "STUB: not implemented"
+	return *new(t.Trace), false
 }

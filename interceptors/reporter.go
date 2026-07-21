@@ -1,6 +1,3 @@
-// Copyright (c) The go-grpc-middleware Authors.
-// Licensed under the Apache License 2.0.
-
 package interceptors
 
 import (
@@ -34,15 +31,16 @@ type ServerReportable interface {
 	ServerReporter(context.Context, CallMeta) (Reporter, context.Context)
 }
 
-// CommonReportableFunc helper allows an easy way to implement reporter with common client and server logic.
 type CommonReportableFunc func(ctx context.Context, c CallMeta) (Reporter, context.Context)
 
 func (f CommonReportableFunc) ClientReporter(ctx context.Context, c CallMeta) (Reporter, context.Context) {
-	return f(ctx, c)
+	_ = "STUB: not implemented"
+	return *new(Reporter), *new(context.Context)
 }
 
 func (f CommonReportableFunc) ServerReporter(ctx context.Context, c CallMeta) (Reporter, context.Context) {
-	return f(ctx, c)
+	_ = "STUB: not implemented"
+	return *new(Reporter), *new(context.Context)
 }
 
 type Reporter interface {
@@ -55,19 +53,13 @@ var _ Reporter = NoopReporter{}
 
 type NoopReporter struct{}
 
-func (NoopReporter) PostCall(error, time.Duration)            {}
-func (NoopReporter) PostMsgSend(any, error, time.Duration)    {}
-func (NoopReporter) PostMsgReceive(any, error, time.Duration) {}
+func (NoopReporter) PostCall(error, time.Duration)            { _ = "STUB: not implemented"; return }
+func (NoopReporter) PostMsgSend(any, error, time.Duration)    { _ = "STUB: not implemented"; return }
+func (NoopReporter) PostMsgReceive(any, error, time.Duration) { _ = "STUB: not implemented"; return }
 
 type report struct {
 	callMeta  CallMeta
 	startTime time.Time
 }
 
-func newReport(callMeta CallMeta) report {
-	r := report{
-		startTime: time.Now(),
-		callMeta:  callMeta,
-	}
-	return r
-}
+func newReport(callMeta CallMeta) report { _ = "STUB: not implemented"; return *new(report) }
