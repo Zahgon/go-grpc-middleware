@@ -1,6 +1,3 @@
-// Copyright (c) The go-grpc-middleware Authors.
-// Licensed under the Apache License 2.0.
-
 package main
 
 import (
@@ -36,16 +33,13 @@ const (
 	targetGRPCAddr = "localhost:8080"
 )
 
-// interceptorLogger adapts slog logger to interceptor logger.
-// This code is simple enough to be copied and not imported.
 func interceptorLogger(l *slog.Logger) logging.Logger {
-	return logging.LoggerFunc(func(ctx context.Context, lvl logging.Level, msg string, fields ...any) {
-		l.Log(ctx, slog.Level(lvl), msg, fields...)
-	})
+	_ = "STUB: not implemented"
+	return *new(logging.Logger)
 }
 
 func main() {
-	// Setup logging.
+
 	logger := slog.New(slog.NewTextHandler(os.Stderr, &slog.HandlerOptions{}))
 	rpcLogger := logger.With("service", "gRPC/client", "component", component)
 	logTraceID := func(ctx context.Context) logging.Fields {
@@ -55,16 +49,12 @@ func main() {
 		return nil
 	}
 
-	// Setup metrics.
 	reg := prometheus.NewRegistry()
 	clMetrics := grpcprom.NewClientMetrics(
 		grpcprom.WithClientHandlingTimeHistogram(
 			grpcprom.WithHistogramBuckets([]float64{0.001, 0.01, 0.1, 0.3, 0.6, 1, 3, 6, 9, 20, 30, 60, 90, 120}),
 		),
-		// Add user_id as a context label. This user option is necessary
-		// to initialize the metrics with the labels that will be provided
-		// dynamically from the context. This should be used in tandem with
-		// WithLabelsFromContext in the interceptor options.
+
 		grpcprom.WithClientContextLabels("user_id"),
 	)
 	reg.MustRegister(clMetrics)
@@ -75,8 +65,6 @@ func main() {
 		return nil
 	}
 
-	// Extract the user id value from gRPC metadata
-	// and use it as a label on our metrics.
 	labelsFromContext := func(ctx context.Context) prometheus.Labels {
 		labels := prometheus.Labels{}
 
@@ -90,7 +78,6 @@ func main() {
 		return labels
 	}
 
-	// Set up OTLP tracing (stdout for debug).
 	exporter, err := stdout.New(stdout.WithPrettyPrint())
 	if err != nil {
 		logger.Error("failed to init exporter", "err", err)
@@ -154,11 +141,11 @@ func main() {
 	httpSrv := &http.Server{Addr: httpAddr}
 	g.Add(func() error {
 		m := http.NewServeMux()
-		// Create HTTP handler for Prometheus metrics.
+
 		m.Handle("/metrics", promhttp.HandlerFor(
 			reg,
 			promhttp.HandlerOpts{
-				// Opt into OpenMetrics e.g. to support exemplars.
+
 				EnableOpenMetrics: true,
 			},
 		))
